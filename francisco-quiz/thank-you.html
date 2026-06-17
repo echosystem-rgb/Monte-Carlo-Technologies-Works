@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EKO MOTO – Order Confirmed</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* ── THANK-YOU HERO ── */
+    .thankyou-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      text-align: center;
+    }
+
+    .ty-checkmark {
+      width: 72px;
+      height: 72px;
+      background: var(--red, #e63030);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      color: #fff;
+      margin: 0 auto 28px;
+      box-shadow: 0 0 40px rgba(230,48,48,.4);
+    }
+
+    /* Big headline */
+    .ty-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(72px, 14vw, 130px);
+      font-weight: 900;
+      line-height: .92;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      margin: 0 0 24px;
+      color: #fff;
+    }
+    .ty-title span {
+      color: var(--red, #e63030);
+      display: block;
+    }
+
+    /* Kicker now sits BELOW the title */
+    .ty-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red, #e63030);
+      border: 1px solid var(--red, #e63030);
+      border-radius: 4px;
+      padding: 6px 16px;
+      margin-bottom: 28px;
+    }
+
+    /* Sub-text */
+    .ty-sub {
+      font-size: 17px;
+      color: #aaa;
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .ty-sub strong { color: #fff; }
+
+    /* Green delivery badge */
+    .ty-delivery-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #0d3320;
+      color: #22cc66;
+      border: 1px solid #22cc66;
+      border-radius: 999px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      margin-bottom: 44px;
+    }
+    .ty-delivery-badge::before { content: '🚚'; }
+
+    /* ── UNIFIED ORDER CARD ── */
+    .ty-unified-card {
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: left;
+      margin-bottom: 36px;
+    }
+
+    /* Meta row (4 cells) — flat inside the card, dividers only */
+    .ty-receipt-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .ty-meta-item {
+      padding: 24px 28px;
+      border-right: 1px solid #2a2a2a;
+      /* Override any inherited card styles */
+      background: transparent !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+    }
+    .ty-meta-item:last-child { border-right: none; }
+    .ty-meta-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 6px;
+    }
+    .ty-meta-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .ty-meta-value.green { color: #22cc66; }
+
+    /* Address + Summary stack — full width */
+    .ty-details-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      border-bottom: 1px solid #2a2a2a;
+      gap: 0;
+    }
+    .ty-panel {
+      padding: 12px 148px 28px 148px;
+    }
+    /* Horizontal divider after Delivery Address — spans full width */
+    .ty-panel:first-child {
+      border-bottom: 1px solid #2a2a2a !important;
+    }
+    .ty-panel-head {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 16px;
+    }
+
+    /* Address fields */
+    .ty-addr-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .ty-addr-line {
+      font-size: 15px;
+      color: #888;
+      margin-bottom: 3px;
+    }
+    .ty-addr-phone {
+      font-size: 15px;
+      color: #888;
+      margin-top: 8px;
+    }
+    .ty-addr-note {
+      font-size: 12px;
+      color: #555;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #2a2a2a;
+    }
+
+    /* Summary rows — consistent spacing for perfect divider alignment */
+    .ty-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #1e1e1e;
+      font-size: 14px;
+      color: #aaa;
+    }
+    .ty-row:first-child {
+      padding-top: 0;
+    }
+    .ty-row:last-child {
+      border-bottom: none;
+      font-weight: 700;
+      font-size: 16px;
+      color: #fff;
+      padding-top: 14px;
+      padding-bottom: 0;
+      margin-top: 0;
+    }
+    .ty-row-total-amount {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px;
+      color: var(--red, #e63030);
+    }
+
+    /* CTA */
+    .ty-actions {
+      margin-top: 32px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .ty-help-note {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #555;
+    }
+    .ty-help-note a { color: #888; text-decoration: underline; }
+
+    /* Slightly smaller "Continue Shopping" CTA on this page only */
+    .ty-actions .btn-primary {
+      padding: 11px 26px;
+      font-size: 14px;
+    }
+
+    /* ── HARD RESET: kill any inherited card chrome on cells ── */
+    .ty-unified-card .ty-meta-item,
+    .ty-unified-card .ty-panel {
+      background: transparent !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+    /* The outer card is the ONLY border — cells only get internal dividers */
+    .ty-unified-card .ty-receipt-meta .ty-meta-item {
+      border-top: none !important;
+      border-bottom: none !important;
+      border-left: none !important;
+      /* border-right stays for the divider, removed on last child */
+    }
+    .ty-unified-card .ty-receipt-meta .ty-meta-item:last-child {
+      border-right: none !important;
+    }
+    .ty-unified-card .ty-details-grid .ty-panel {
+      border-top: none !important;
+    }
+    .ty-unified-card .ty-details-grid .ty-panel:first-child {
+      border-left: none !important;
+      border-right: none !important;
+      border-bottom: 1px solid #2a2a2a !important;
+    }
+    .ty-unified-card .ty-details-grid .ty-panel:last-child {
+      border-left: none !important;
+      border-right: none !important;
+      border-bottom: none !important;
+    }
+
+    /* ── SEARCH OVERLAY OVERRIDES ── */
+    /* Full-image product cards in search */
+    .search-product-img-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 6px;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .search-product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;   /* show full image, no cropping */
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .ty-receipt-meta { grid-template-columns: 1fr 1fr; }
+      .ty-meta-item:nth-child(2) { border-right: none; }
+      .ty-meta-item:nth-child(3) { border-top: 1px solid #2a2a2a; }
+      .ty-details-grid { grid-template-columns: 1fr; }
+      .ty-details-grid::before { display: none; }
+      .ty-panel:first-child { border-right: none; border-bottom: 1px solid #2a2a2a; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="logo" href="index.html">EKO <span>MOTO</span></a>
+  <div class="nav-links" id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#products">Shop</a>
+    <a href="index.html#about-strip">About</a>
+    <a href="index.html#contact-footer">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">🌙</button>
+    <button class="cart-btn" onclick="window.location.href='cart.html'">
+      <span class="cart-icon">🛒</span><span class="cart-label"> Cart</span>
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<main>
+  <div class="thankyou-wrap">
+
+    <!-- 1. Checkmark -->
+    <div class="ty-checkmark">✓</div>
+
+    <!-- 2. Big headline -->
+    <h1 class="ty-title">Thank<br><span>You!</span></h1>
+
+    <!-- 3. "Order Locked In" kicker — now BELOW the title -->
+    <div class="ty-kicker">🏁 Order Locked In</div>
+
+    <!-- 4. Sub-text (no "geared up") -->
+    <p class="ty-sub">
+      Your order has been received, <strong id="ty-name">Rider</strong>.
+      We're getting everything packed and it'll be on its way to you shortly.
+    </p>
+
+    <!-- 5. Delivery badge -->
+    <div class="ty-delivery-badge">Order Received — Preparing for Shipment</div>
+
+    <!-- 6. Unified order card -->
+    <div class="ty-unified-card">
+
+      <!-- Meta row: ref / eta / courier / payment -->
+      <div class="ty-receipt-meta">
+        <div class="ty-meta-item">
+          <div class="ty-meta-label">Order Reference</div>
+          <div class="ty-meta-value" id="ty-ref" style="letter-spacing:1px">—</div>
+        </div>
+        <div class="ty-meta-item">
+          <div class="ty-meta-label">Est. Delivery</div>
+          <div class="ty-meta-value green">3–5 Business Days</div>
+        </div>
+        <div class="ty-meta-item">
+          <div class="ty-meta-label">Courier</div>
+          <div class="ty-meta-value">J&amp;T Express</div>
+        </div>
+        <div class="ty-meta-item">
+          <div class="ty-meta-label">Payment</div>
+          <div class="ty-meta-value" id="ty-payment">—</div>
+        </div>
+      </div>
+
+      <!-- Address + Summary row -->
+      <div class="ty-details-grid">
+        <!-- Delivery Address -->
+        <div class="ty-panel" id="ty-address">
+          <div class="ty-panel-head">📦 Delivery Address</div>
+          <div class="ty-addr-name" id="ty-addr-name">—</div>
+          <div class="ty-addr-line" id="ty-addr-street">—</div>
+          <div class="ty-addr-line" id="ty-addr-city">—</div>
+          <div class="ty-addr-phone" id="ty-addr-phone">—</div>
+          <div class="ty-addr-note" id="ty-addr-note" style="display:none"></div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="ty-panel" id="ty-order-summary">
+          <div class="ty-panel-head">🧾 Order Summary</div>
+          <div id="ty-items-list"></div>
+        </div>
+      </div>
+
+    </div><!-- /ty-unified-card -->
+
+    <div class="ty-actions">
+      <a class="btn-primary" href="index.html#products">← Continue Shopping</a>
+    </div>
+    <p class="ty-help-note">Need help with your order? <a href="index.html#contact-footer">Get in touch →</a></p>
+  </div>
+
+
+</main>
+
+<div class="toast" id="toast"></div>
+<script src="assets/js/main.js"></script>
+
+<script>
+/* ─── Thank-you page data rendering ─── */
+document.addEventListener('DOMContentLoaded', function () {
+  const order = loadOrder ? loadOrder() : null;
+  if (!order) return;
+
+  /* Name */
+  const nameEl = document.getElementById('ty-name');
+  if (nameEl) nameEl.textContent = order.customer.firstName;
+
+  /* Order ref */
+  const refEl = document.getElementById('ty-ref');
+  if (refEl) refEl.textContent = order.ref;
+
+  /* Payment method */
+  const payEl = document.getElementById('ty-payment');
+  if (payEl) payEl.textContent = order.paymentMethod || 'Cash on Delivery';
+
+  /* Address */
+  const c = order.customer;
+  const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setTxt('ty-addr-name',   c.firstName + ' ' + c.lastName);
+  setTxt('ty-addr-street', c.address);
+  setTxt('ty-addr-city',   c.city + ' ' + c.zip);
+  setTxt('ty-addr-phone',  '📞 ' + c.phone);
+  if (c.notes) {
+    const noteEl = document.getElementById('ty-addr-note');
+    if (noteEl) { noteEl.textContent = 'Note: ' + c.notes; noteEl.style.display = ''; }
+  }
+
+  /* Order summary items */
+  const listEl = document.getElementById('ty-items-list');
+  if (listEl) {
+    const rows = order.items.map(i =>
+      '<div class="ty-row"><span>' + i.product.name + ' (' + i.size + ') × ' + i.qty + '</span>' +
+      '<span>₱' + (i.product.price * i.qty) + '</span></div>'
+    ).join('');
+
+    const shipping =
+      '<div class="ty-row"><span>Shipping</span><span>' +
+      (order.shipping === 0
+        ? '<span style="color:#22cc66">Free</span>'
+        : '₱' + order.shipping) +
+      '</span></div>';
+
+    const total =
+      '<div class="ty-row"><span>Total Paid</span>' +
+      '<span class="ty-row-total-amount">₱' + order.total + '</span></div>';
+
+    listEl.innerHTML = rows + shipping + total;
+  }
+});
+
+/* ─── Search overlay: full-image cards + trending tag clicks ─── */
+document.addEventListener('DOMContentLoaded', function () {
+  /* 1. Make product images show fully (object-fit: contain) */
+  function patchSearchImages() {
+    /* The search overlay rerenders dynamically; observe the DOM */
+    const observer = new MutationObserver(() => {
+      document.querySelectorAll('.search-overlay .product-img, .search-overlay img, .search-results img').forEach(img => {
+        img.style.objectFit = 'contain';
+        img.style.objectPosition = 'center';
+        /* Make the wrapper square and not clip */
+        const wrap = img.parentElement;
+        if (wrap) {
+          wrap.style.overflow = 'visible';
+          wrap.style.background = 'transparent';
+        }
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+  }
+  patchSearchImages();
+
+  /* 2. Trending search tags → populate input & trigger search */
+  document.addEventListener('click', function (e) {
+    const tag = e.target.closest('.trending-tag, .trending-item, [data-trending]');
+    if (!tag) return;
+    const term = tag.dataset.trending || tag.textContent.trim();
+    /* Try to find the search input in the overlay */
+    const input = document.querySelector('.search-overlay input[type="text"], .search-overlay input[type="search"], #search-input');
+    if (input) {
+      input.value = term;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      input.focus();
+    }
+  });
+});
+</script>
+</body>
+</html>

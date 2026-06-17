@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EKO MOTO – Checkout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav id="nav">
+  <a class="logo" href="index.html">EKO <span>MOTO</span></a>
+  <div class="nav-links" id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#products">Shop</a>
+    <a href="index.html#about-strip">About</a>
+    <a href="index.html#contact-footer">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">🌙</button>
+    <button class="cart-btn" onclick="window.location.href='cart.html'">
+      <span class="cart-icon">🛒</span><span class="cart-label"> Cart</span>
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<main>
+  <div style="display:flex;align-items:center;gap:20px;padding:60px 80px 0">
+    <button onclick="window.history.back()" style="background:none;border:2px solid var(--red);color:var(--red);font-family:var(--font-d);font-size:13px;font-weight:600;padding:9px 16px;cursor:pointer;border-radius:6px;letter-spacing:1px;text-transform:uppercase;transition:all .2s">← BACK</button>
+    <h1 class="checkout-title" style="margin:0;padding:0">Checkout</h1>
+  </div>
+
+  <!-- AUTH GATE: shown when not logged in -->
+  <div class="auth-gate" id="auth-gate">
+    <div style="font-size:48px;margin-bottom:16px">🔒</div>
+    <h2>Sign In to Continue</h2>
+    <p>You need to be signed in before placing an order.</p>
+    <button class="btn-primary" onclick="openLogin()" style="padding:14px 36px;font-size:16px;letter-spacing:2px">
+      Sign In / Create Account →
+    </button>
+  </div>
+
+  <div class="checkout-layout" id="checkout-form-wrap">
+    <div>
+      <div class="form-section">
+        <div class="form-section-label">Personal Information</div>
+        <div class="form-grid">
+          <div class="field" id="f-fname">
+            <label>First Name *</label>
+            <input type="text" id="fname" placeholder="Juan">
+            <span class="field-err">Required</span>
+          </div>
+          <div class="field" id="f-lname">
+            <label>Last Name *</label>
+            <input type="text" id="lname" placeholder="dela Cruz">
+            <span class="field-err">Required</span>
+          </div>
+          <div class="field" id="f-email">
+            <label>Email Address *</label>
+            <input type="email" id="email" placeholder="juan@email.com">
+            <span class="field-err">Valid email required</span>
+          </div>
+          <div class="field" id="f-phone">
+            <label>Phone Number *</label>
+            <input type="tel" id="phone" placeholder="+63 917 000 0000">
+            <span class="field-err">Required</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-label">Shipping Address</div>
+        <div class="form-grid">
+          <div class="field form-grid full" id="f-addr">
+            <label>Street Address *</label>
+            <input type="text" id="addr" placeholder="123 Rizal Street, Brgy. San Jose">
+            <span class="field-err">Required</span>
+          </div>
+          <div class="field" id="f-city">
+            <label>City / Municipality *</label>
+            <input type="text" id="city" placeholder="San Pablo City">
+            <span class="field-err">Required</span>
+          </div>
+          <div class="field" id="f-zip">
+            <label>ZIP / Postal Code *</label>
+            <input type="text" id="zip" placeholder="4000">
+            <span class="field-err">Required</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-label">Order Notes (optional)</div>
+        <div class="form-grid full">
+          <div class="field">
+            <label>Notes</label>
+            <textarea id="notes" placeholder="Special delivery instructions, landmark, etc."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <button class="place-btn" onclick="placeOrder()">Place Order →</button>
+    </div>
+
+    <div class="checkout-right-col">
+      <!-- ══ PAYMENT METHOD ══ -->
+      <div class="payment-section" id="payment-section">
+        <div class="form-section-label" style="margin-bottom:16px">Payment Method</div>
+
+        <div class="payment-options">
+
+          <!-- Cash on Delivery -->
+          <div class="payment-option" onclick="selectPayment('Cash on Delivery', this)">
+            <div class="payment-option-header">
+              <span class="payment-icon">💵</span>
+              <span class="payment-label">Cash on Delivery</span>
+              <span class="payment-check">✓</span>
+            </div>
+            <div class="payment-instructions" id="pay-inst-cash-on-delivery">
+              Pay in cash when your order arrives at your door. Have the exact amount ready for the courier.
+            </div>
+          </div>
+
+          <!-- GCash -->
+          <div class="payment-option" onclick="selectPayment('GCash', this)">
+            <div class="payment-option-header">
+              <span class="payment-icon">📱</span>
+              <span class="payment-label">GCash</span>
+              <span class="payment-check">✓</span>
+            </div>
+            <div class="payment-instructions" id="pay-inst-gcash">
+              <div class="bank-detail-row"><span>GCash Number</span><span class="bank-detail-val">0917 123 4567</span></div>
+              <div class="bank-detail-row"><span>Account Name</span><span class="bank-detail-val">EKO MOTO INC.</span></div>
+              <p class="pay-note">Send the exact total to the number above, then upload your GCash receipt/screenshot below.</p>
+              <label class="upload-label">
+                <span>📎 Attach Receipt</span>
+                <input type="file" accept="image/*,.pdf" id="receipt-gcash" onchange="handleReceiptUpload(this,'gcash')">
+              </label>
+              <div class="receipt-preview" id="preview-gcash"></div>
+            </div>
+          </div>
+
+          <!-- Maya -->
+          <div class="payment-option" onclick="selectPayment('Maya', this)">
+            <div class="payment-option-header">
+              <span class="payment-icon">💚</span>
+              <span class="payment-label">Maya</span>
+              <span class="payment-check">✓</span>
+            </div>
+            <div class="payment-instructions" id="pay-inst-maya">
+              <div class="bank-detail-row"><span>Maya Number</span><span class="bank-detail-val">0999 876 5432</span></div>
+              <div class="bank-detail-row"><span>Account Name</span><span class="bank-detail-val">EKO MOTO INC.</span></div>
+              <p class="pay-note">Send the exact total to the number above, then upload your Maya receipt/screenshot below.</p>
+              <label class="upload-label">
+                <span>📎 Attach Receipt</span>
+                <input type="file" accept="image/*,.pdf" id="receipt-maya" onchange="handleReceiptUpload(this,'maya')">
+              </label>
+              <div class="receipt-preview" id="preview-maya"></div>
+            </div>
+          </div>
+
+          <!-- Bank Transfer -->
+          <div class="payment-option" onclick="selectPayment('Bank Transfer', this)">
+            <div class="payment-option-header">
+              <span class="payment-icon">🏦</span>
+              <span class="payment-label">Bank Transfer</span>
+              <span class="payment-check">✓</span>
+            </div>
+            <div class="payment-instructions" id="pay-inst-bank-transfer">
+              <div class="bank-tabs">
+                <button class="bank-tab active" onclick="switchBank(event,'bdo')">BDO</button>
+                <button class="bank-tab" onclick="switchBank(event,'bpi')">BPI</button>
+                <button class="bank-tab" onclick="switchBank(event,'metrobank')">Metrobank</button>
+                <button class="bank-tab" onclick="switchBank(event,'unionbank')">UnionBank</button>
+              </div>
+
+              <!-- BDO -->
+              <div class="bank-details active" id="bank-bdo">
+                <div class="bank-detail-row"><span>Bank</span><span class="bank-detail-val">BDO Unibank</span></div>
+                <div class="bank-detail-row"><span>Account Name</span><span class="bank-detail-val">EKO MOTO INC.</span></div>
+                <div class="bank-detail-row"><span>Account Number</span><span class="bank-detail-val copy-val" onclick="copyText('1234-5678-9012')">1234-5678-9012 <span class="copy-hint">Copy</span></span></div>
+                <div class="bank-detail-row"><span>Account Type</span><span class="bank-detail-val">Savings Account</span></div>
+              </div>
+              <!-- BPI -->
+              <div class="bank-details" id="bank-bpi">
+                <div class="bank-detail-row"><span>Bank</span><span class="bank-detail-val">Bank of the Philippine Islands</span></div>
+                <div class="bank-detail-row"><span>Account Name</span><span class="bank-detail-val">EKO MOTO INC.</span></div>
+                <div class="bank-detail-row"><span>Account Number</span><span class="bank-detail-val copy-val" onclick="copyText('9876-5432-1098')">9876-5432-1098 <span class="copy-hint">Copy</span></span></div>
+                <div class="bank-detail-row"><span>Account Type</span><span class="bank-detail-val">Savings Account</span></div>
+              </div>
+              <!-- Metrobank -->
+              <div class="bank-details" id="bank-metrobank">
+                <div class="bank-detail-row"><span>Bank</span><span class="bank-detail-val">Metropolitan Bank & Trust Co.</span></div>
+                <div class="bank-detail-row"><span>Account Name</span><span class="bank-detail-val">EKO MOTO INC.</span></div>
+                <div class="bank-detail-row"><span>Account Number</span><span class="bank-detail-val copy-val" onclick="copyText('5555-1234-5678')">5555-1234-5678 <span class="copy-hint">Copy</span></span></div>
+                <div class="bank-detail-row"><span>Account Type</span><span class="bank-detail-val">Current Account</span></div>
+              </div>
+              <!-- UnionBank -->
+              <div class="bank-details" id="bank-unionbank">
+                <div class="bank-detail-row"><span>Bank</span><span class="bank-detail-val">UnionBank of the Philippines</span></div>
+                <div class="bank-detail-row"><span>Account Name</span><span class="bank-detail-val">EKO MOTO INC.</span></div>
+                <div class="bank-detail-row"><span>Account Number</span><span class="bank-detail-val copy-val" onclick="copyText('0012-3456-7890')">0012-3456-7890 <span class="copy-hint">Copy</span></span></div>
+                <div class="bank-detail-row"><span>Account Type</span><span class="bank-detail-val">Savings Account</span></div>
+              </div>
+
+              <p class="pay-note">Transfer the exact total to your chosen bank. Use your order reference as the <strong>transaction description/remarks</strong>. Then upload your deposit slip or screenshot below.</p>
+              <label class="upload-label">
+                <span>📎 Attach Proof of Payment</span>
+                <input type="file" accept="image/*,.pdf" id="receipt-bank" onchange="handleReceiptUpload(this,'bank')">
+              </label>
+              <div class="receipt-preview" id="preview-bank"></div>
+            </div>
+          </div>
+
+        </div><!-- /payment-options -->
+      </div><!-- /payment-section -->
+
+      <div class="checkout-summary" id="checkout-summary"></div>
+    </div><!-- /checkout-right-col -->
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+     SHARED LOGIN MODAL — paste inside <main> on every page
+     ═══════════════════════════════════════════════════════ -->
+<div class="login-modal-bg" id="login-modal" onclick="if(event.target===this)closeLogin()">
+  <div class="login-modal-box" id="login-modal-box">
+
+    <!-- ── SIGN IN PANE ── -->
+    <div id="auth-login">
+      <div class="login-brand">EKO <span>MOTO</span></div>
+      <button class="auth-back-btn" onclick="closeLogin()" aria-label="Close">← BACK</button>
+      <div class="auth-welcome">Welcome <span>Back</span></div>
+      <p class="auth-tagline">Sign in to your EKO MOTO account</p>
+
+      <div class="login-field">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="juan@email.com"
+               onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="login-field login-field--pw">
+        <label>Password</label>
+        <div class="pw-wrapper">
+          <input type="password" id="login-pass" placeholder="••••••••"
+                 onkeydown="if(event.key==='Enter')doLogin()">
+          <button type="button" class="pw-toggle" onclick="togglePw('login-pass',this)" aria-label="Show password">👁</button>
+        </div>
+      </div>
+
+      <div class="auth-remember-row">
+        <label><input type="checkbox" id="login-remember"> Remember me</label>
+        <a class="auth-forgot" onclick="showToast('Password reset coming soon!')">Forgot password?</a>
+      </div>
+
+      <button class="login-submit-btn" onclick="doLogin()">Log In</button>
+
+      <div class="auth-or"><span>OR</span></div>
+
+      <div class="social-btns-wrap">
+        <button class="social-btn google-btn" onclick="socialSignIn('Google')">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+        <button class="social-btn facebook-btn" onclick="socialSignIn('Facebook')">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ffffff"><path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/></svg>
+          Continue with Facebook
+        </button>
+      </div>
+
+      <p class="auth-switch">Don't have an account? <a onclick="switchAuthTab('signup')">Sign Up</a></p>
+    </div>
+
+    <!-- ── SIGN UP PANE ── -->
+    <div id="auth-signup" style="display:none">
+      <div class="login-brand">EKO <span>MOTO</span></div>
+      <button class="auth-back-btn" onclick="switchAuthTab('login')" aria-label="Back to sign in">← BACK</button>
+      <div class="auth-welcome">Welcome to <span>EKO MOTO</span></div>
+      <p class="auth-tagline">Your best place for racing gear</p>
+
+      <div class="signup-grid">
+        <div class="login-field full"><label>Full Name *</label><input type="text" id="signup-name" placeholder="Juan dela Cruz"></div>
+        <div class="login-field full"><label>Email *</label><input type="email" id="signup-email" placeholder="juan@email.com"></div>
+        <div class="login-field">
+          <label>Date of Birth * <span style="color:var(--red);font-size:10px">(18+ only)</span></label>
+          <input type="date" id="signup-dob">
+          <div class="dob-hint">You must be at least 18 years old.</div>
+        </div>
+        <div class="login-field"><label>Phone Number</label><input type="tel" id="signup-phone" placeholder="+63 917 000 0000"></div>
+        <div class="login-field full"><label>Street Address</label><input type="text" id="signup-address" placeholder="123 Rizal St, Brgy. San Jose"></div>
+        <div class="login-field"><label>City / Municipality</label><input type="text" id="signup-city" placeholder="San Pablo City"></div>
+        <div class="login-field"><label>ZIP Code</label><input type="text" id="signup-zip" placeholder="4000"></div>
+        <div class="login-field login-field--pw full">
+          <label>Password *</label>
+          <div class="pw-wrapper">
+            <input type="password" id="signup-pass" placeholder="Min 8 chars, 1 uppercase, 1 symbol"
+                   oninput="checkPwRules(this.value)">
+            <button type="button" class="pw-toggle" onclick="togglePw('signup-pass',this)" aria-label="Show password">👁</button>
+          </div>
+          <div class="pw-rules">
+            <span id="rule-len">✕ 8+ characters</span>
+            <span id="rule-upper">✕ 1 uppercase</span>
+            <span id="rule-special">✕ 1 special character</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="login-submit-btn" onclick="doSignup()">Sign Up</button>
+
+      <div class="auth-or"><span>OR</span></div>
+      <div class="social-btns-wrap">
+        <button class="social-btn google-btn" onclick="socialSignIn('Google')">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Sign up with Google
+        </button>
+        <button class="social-btn facebook-btn" onclick="socialSignIn('Facebook')">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ffffff"><path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/></svg>
+          Sign up with Facebook
+        </button>
+      </div>
+
+      <p class="auth-switch">Already have an account? <a onclick="switchAuthTab('login')">Log In</a></p>
+    </div>
+
+    <!-- ── PROFILE / EDIT PANE ── -->
+    <div id="auth-profile" style="display:none">
+      <div class="login-brand">EKO <span>MOTO</span></div>
+      <button class="auth-back-btn" onclick="closeLogin()" aria-label="Close">← BACK</button>
+      <div class="auth-welcome">My <span>Profile</span></div>
+      <p class="auth-tagline">Update your account details</p>
+
+      <div class="profile-grid">
+        <div class="login-field full"><label>Full Name</label><input type="text" id="profile-name" placeholder="Juan dela Cruz"></div>
+        <div class="login-field full"><label>Email (read-only)</label><input type="email" id="profile-email" readonly style="opacity:.6;cursor:not-allowed"></div>
+        <div class="login-field"><label>Date of Birth</label><input type="date" id="profile-dob"></div>
+        <div class="login-field"><label>Phone Number</label><input type="tel" id="profile-phone" placeholder="+63 917 000 0000"></div>
+        <div class="login-field full"><label>Street Address</label><input type="text" id="profile-address" placeholder="123 Rizal St, Brgy. San Jose"></div>
+        <div class="login-field"><label>City / Municipality</label><input type="text" id="profile-city" placeholder="San Pablo City"></div>
+        <div class="login-field"><label>ZIP Code</label><input type="text" id="profile-zip" placeholder="4000"></div>
+      </div>
+
+      <button class="login-submit-btn" onclick="saveProfile()">Save Changes →</button>
+      <p class="auth-switch" style="margin-top:12px">
+        <a onclick="doLogout();closeLogin()" style="color:var(--muted)">Sign out of this account</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<style>
+/* ── RIGHT COLUMN WRAPPER ── */
+.checkout-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── PAYMENT SECTION ── */
+.payment-section {
+  background: var(--card, #111);
+  border: 1px solid #222;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-option {
+  border: 1.5px solid #2a2a2a;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  overflow: hidden;
+}
+.payment-option:hover { border-color: #555; }
+.payment-option.selected { border-color: var(--red, #e63030); background: rgba(230,48,48,.06); }
+
+.payment-option-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  user-select: none;
+}
+.payment-icon { font-size: 20px; }
+.payment-label {
+  flex: 1;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--fg, #fff);
+}
+.payment-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: transparent;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.payment-option.selected .payment-check {
+  background: var(--red, #e63030);
+  border-color: var(--red, #e63030);
+  color: #fff;
+}
+
+/* Instructions panel */
+.payment-instructions {
+  display: none;
+  padding: 0 18px 18px;
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.6;
+}
+.payment-option.selected .payment-instructions { display: block; }
+
+/* Bank detail rows */
+.bank-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #1e1e1e;
+  font-size: 13px;
+  color: #888;
+}
+.bank-detail-row:last-of-type { border-bottom: none; }
+.bank-detail-val {
+  font-weight: 600;
+  color: #fff;
+  text-align: right;
+}
+.copy-val { cursor: pointer; }
+.copy-val:hover { color: var(--red, #e63030); }
+.copy-hint {
+  font-size: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--red, #e63030);
+  margin-left: 6px;
+  opacity: .7;
+}
+
+.pay-note {
+  margin: 12px 0 10px;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+.pay-note strong { color: #aaa; }
+
+/* Bank tabs */
+.bank-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.bank-tab {
+  background: #1a1a1a;
+  border: 1.5px solid #333;
+  border-radius: 6px;
+  color: #888;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.bank-tab.active, .bank-tab:hover {
+  border-color: var(--red, #e63030);
+  color: var(--red, #e63030);
+  background: rgba(230,48,48,.08);
+}
+.bank-details { display: none; }
+.bank-details.active { display: block; }
+
+/* Receipt upload */
+.upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 9px 18px;
+  border: 1.5px dashed #444;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888;
+  transition: border-color .2s, color .2s;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+.upload-label:hover { border-color: var(--red,#e63030); color: var(--red,#e63030); }
+.upload-label input[type="file"] { display: none; }
+
+.receipt-preview {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #22cc66;
+  min-height: 0;
+}
+
+@media(max-width:768px){
+  .checkout-right-col { gap: 16px; }
+  .bank-tabs { gap: 4px; }
+  .bank-tab { font-size: 11px; padding: 5px 10px; }
+}
+</style>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/checkout.js"></script>
+
+<script>
+/* ── Auth gate: hide form if not logged in ── */
+function checkAuthGate() {
+  const gate = document.getElementById('auth-gate');
+  const form = document.getElementById('checkout-form-wrap');
+  if (!getUser()) {
+    if (gate) gate.classList.add('visible');
+    if (form) form.style.display = 'none';
+  } else {
+    if (gate) gate.classList.remove('visible');
+    if (form) form.style.display = 'grid';
+  }
+}
+/* Re-check after login/logout */
+const _origUpdateAuth = updateAuthState;
+updateAuthState = function() { _origUpdateAuth(); checkAuthGate(); };
+document.addEventListener('DOMContentLoaded', checkAuthGate);
+
+/* ── Bank tab switcher ── */
+function switchBank(e, bank) {
+  e.stopPropagation();
+  document.querySelectorAll('.bank-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.bank-details').forEach(d => d.classList.remove('active'));
+  e.target.classList.add('active');
+  const el = document.getElementById('bank-' + bank);
+  if (el) el.classList.add('active');
+}
+
+/* ── Copy account number ── */
+function copyText(val) {
+  navigator.clipboard.writeText(val).then(() => showToast('Copied: ' + val));
+}
+
+/* ── Receipt upload preview ── */
+function handleReceiptUpload(input, key) {
+  const preview = document.getElementById('preview-' + key);
+  if (!preview) return;
+  if (!input.files.length) { preview.textContent = ''; return; }
+  const name = input.files[0].name;
+  preview.textContent = '✓ Attached: ' + name;
+}
+</script>
+</body>
+</html>

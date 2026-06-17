@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us – EKO MOTO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/reviews.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     SHARED NAV
+════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <a class="logo" href="index.html">EKO <span>MOTO</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#products">Shop</a>
+    <a href="about.html">About</a>
+    <a href="index.html#contact-footer">Contact</a>
+    <button class="nav-search-btn" onclick="openSearch()" aria-label="Search">⌕</button>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">🌙</button>
+
+    <!-- LOGIN BUTTON (shown when logged out) -->
+    <button class="nav-login-btn" id="nav-login-btn" onclick="openLogin()">Login</button>
+
+    <!-- USER MENU (shown when logged in) -->
+    <div class="nav-user-menu" id="nav-user-menu" style="display:none">
+      <span class="nav-user-avatar">👤</span>
+      <span class="nav-user-name" id="nav-user-name">Rider</span>
+      <button class="nav-logout-btn" onclick="openProfile()" title="Edit Profile">✎</button>
+      <button class="nav-logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+
+    <button class="cart-btn" onclick="window.location.href='cart.html'">
+      <span class="cart-icon">🛒</span> Cart
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════
+     ABOUT PAGE CONTENT
+════════════════════════════════════════════════════ -->
+<main>
+  <div style="display:flex;align-items:center;gap:20px;padding:60px 80px 0">
+    <button class="policy-back" onclick="window.history.back()" style="background:none;border:2px solid var(--red);color:var(--red);font-family:var(--font-d);font-size:8px;font-weight:600;padding:4px 8px;cursor:pointer;border-radius:6px;letter-spacing:1px;text-transform:uppercase;transition:all .2s">← BACK</button>
+    <h1 class="cart-title" style="margin:0;padding:0">About Us</h1>
+  </div>
+
+  <!-- STATS / ABOUT -->
+  <section class="stats-section" id="about-strip">
+    <div class="stats-inner">
+      <!-- About story with images -->
+      <div class="about-story-container">
+        <div class="about-story-text">
+          <p class="section-eyebrow">About EKO MOTO</p>
+          <h2 class="section-title">From a Garage to the Grid</h2>
+          <p class="stats-lead">EKO MOTO started in 2001 in a small motorcycle repair shop, where riders began hand-cutting leather panels for their own track gear because nothing on the market could survive a real crash.</p>
+          <p class="about-story-detail">Today, we're trusted by professional racers, track day enthusiasts, and street riders worldwide. Every piece is engineered to protect, tested on the circuit, and built to last through the toughest conditions.</p>
+        </div>
+      </div>
+      <div class="stats-header">
+        <h3 class="stats-subheading">By the Numbers</h3>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card stat-card--featured">
+          <div class="stat-card-image" id="stat-image-5">
+            <img src="assets/images/EKO APEX URBAN.jpg" alt="Design Built"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="img-placeholder" style="display:none"><span>🎨</span><small>design-built.jpg</small></div>
+          </div>
+          <div class="stat-card-num">200+</div>
+          <div class="stat-card-label">Designs built</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-image" id="stat-image-1">
+            <img src="assets/images/pro team partners.jpg" alt="Pro Team Partners"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="img-placeholder" style="display:none"><span>👥</span><small>pro team partners.jpg</small></div>
+          </div>
+          <div class="stat-card-num">100+</div>
+          <div class="stat-card-label">Pro team partners</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-image" id="stat-image-2">
+            <img src="assets/images/race circuit.jpg" alt="Race Circuit"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="img-placeholder" style="display:none"><span>🏁</span><small>race circuit.jpg</small></div>
+          </div>
+          <div class="stat-card-num">34+</div>
+          <div class="stat-card-label">Race circuits tested</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-image" id="stat-image-3">
+            <img src="assets/images/rider satisfaction.jpg" alt="Rider Satisfaction"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="img-placeholder" style="display:none"><span>⭐</span><small>rider satisfaction.jpg</small></div>
+          </div>
+          <div class="stat-card-num">97%</div>
+          <div class="stat-card-label">Rider satisfaction</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-image" id="stat-image-4">
+            <img src="assets/images/riders equipped.jpg" alt="Riders Equipped"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="img-placeholder" style="display:none"><span>🛠️</span><small>riders equipped.jpg</small></div>
+          </div>
+          <div class="stat-card-num">47K+</div>
+          <div class="stat-card-label">Riders Equipped</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section class="features-section" id="certifications">
+    <div class="features-inner">
+      <p class="section-eyebrow" style="text-align:left">Built to Standard</p>
+      <div class="features-head-row">
+        <h2 class="section-title" style="text-align:left;flex:1">Certifications</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🏎️</div>
+          <div class="feature-name">Track Series</div>
+          <p class="feature-desc">CE2 Level 2 certified. Full-grain and kangaroo leather builds engineered for circuit racing and maximum protection at speed.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧭</div>
+          <div class="feature-name">Touring Series</div>
+          <p class="feature-desc">All-weather adventure jackets and pants with removable liners, waterproofing, and ergonomic comfort for 1,000-mile weeks.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏙️</div>
+          <div class="feature-name">Urban Series</div>
+          <p class="feature-desc">Slim street-smart silhouettes with hidden CE1 armor. Looks as good off the bike as on it.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧤</div>
+          <div class="feature-name">Racing Gloves</div>
+          <p class="feature-desc">From CE Level 2 kangaroo leather track gloves to everyday urban riders — precision grip and protection in every size.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔬</div>
+          <div class="feature-name">Material Science</div>
+          <p class="feature-desc">Aerospace-grade Cordura, kangaroo leather blends, Kevlar reinforcements, and titanium sliders — built to last.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <div class="feature-name">Custom Branding</div>
+          <p class="feature-desc">Team livery and custom colorways available for race squads and corporate partner programs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS + REVIEW SYSTEM -->
+  <section class="testimonials-section" id="rider-reviews">
+
+    <div class="testimonials-inner">
+      <p class="section-eyebrow">Rider Reviews</p>
+      <h2 class="section-title" style="margin-bottom:32px">What Riders Say</h2>
+
+      <!-- STATS BAR -->
+      <div class="review-stats-bar">
+        <div class="review-avg-score" id="review-avg-score">5.0</div>
+        <div class="review-avg-meta">
+          <div class="review-avg-stars" id="review-avg-stars">★★★★★</div>
+          <div class="review-avg-count" id="review-avg-count">4 reviews</div>
+        </div>
+        <div class="review-breakdown" id="review-breakdown"></div>
+      </div>
+
+      <!-- SORT ROW -->
+      <div class="review-sort-row">
+        <span class="review-count-label" id="review-count-label">Showing all reviews</span>
+        <select class="review-sort-sel" id="review-sort-sel" onchange="renderReviews()">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="highest">Highest Rating</option>
+          <option value="lowest">Lowest Rating</option>
+        </select>
+      </div>
+
+      <!-- REVIEW CARDS -->
+      <div class="review-cards-grid" id="review-cards-grid"></div>
+      <button class="review-show-more-btn" id="review-show-more-btn" style="display:none" onclick="showMoreReviews()">Load More Reviews</button>
+
+      <!-- WRITE A REVIEW -->
+      <div class="review-write-wrap">
+        <div class="review-write-title">Leave a Review</div>
+
+        <div id="review-login-gate" style="display:none">
+          <div class="review-login-gate">
+            <strong>Sign in to write a review</strong>
+            Only verified EKO MOTO riders can post a review.
+            <br>
+            <button class="review-login-gate-btn" onclick="openLogin()">Log In / Sign Up &rarr;</button>
+          </div>
+        </div>
+
+        <div id="review-form-wrap">
+          <p class="review-write-sub" id="review-form-subtitle">Share your experience with EKO MOTO gear.</p>
+
+          <div class="star-picker-label">Your Rating *</div>
+          <div class="star-picker" id="star-picker">
+            <button class="star-picker-btn" data-val="1" onclick="setReviewStar(1)" title="1 star">&#9733;</button>
+            <button class="star-picker-btn" data-val="2" onclick="setReviewStar(2)" title="2 stars">&#9733;</button>
+            <button class="star-picker-btn" data-val="3" onclick="setReviewStar(3)" title="3 stars">&#9733;</button>
+            <button class="star-picker-btn" data-val="4" onclick="setReviewStar(4)" title="4 stars">&#9733;</button>
+            <button class="star-picker-btn" data-val="5" onclick="setReviewStar(5)" title="5 stars">&#9733;</button>
+          </div>
+
+          <div class="review-form-grid">
+            <div class="review-form-field">
+              <label>Your Name *</label>
+              <input type="text" id="review-name" placeholder="Marco R." maxlength="60">
+            </div>
+            <div class="review-form-field">
+              <label>Rider Role / Title</label>
+              <input type="text" id="review-role" placeholder="Track Day Rider, BGC Trackday" maxlength="80">
+            </div>
+            <div class="review-form-field full">
+              <label>Your Review *</label>
+              <textarea id="review-text" placeholder="Tell other riders about your experience with EKO MOTO gear..." maxlength="400" oninput="updateReviewCharCount()"></textarea>
+              <div class="review-char-count"><span id="review-char-num">0</span> / 400</div>
+            </div>
+          </div>
+
+          <button class="review-submit-btn" onclick="submitReview()">Post Review &rarr;</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-overlay-backdrop" onclick="closeSearch()"></div>
+  <div class="search-overlay-panel">
+    <div class="search-overlay-bar">
+      <span class="search-ov-icon">⌕</span>
+      <input type="text" id="overlay-input"
+             placeholder="What are you looking for today?"
+             oninput="liveSearch(this.value)"
+             onkeydown="handleSearchKey(event)"
+             autocomplete="off">
+      <button class="search-ov-close" onclick="closeSearch()" aria-label="Close">×</button>
+    </div>
+    <!-- Default view: trending + bestsellers -->
+    <div class="search-overlay-body" id="search-default-body">
+      <div class="search-default" id="search-default">
+        <div class="search-trending-col">
+          <div class="search-col-title">Trending Searches</div>
+          <ul class="trending-list">
+            <li onclick="showTrendingResults('jackets','Racing Jackets',this)">Racing Jackets</li>
+            <li onclick="showTrendingResults('gloves','Racing Gloves',this)">Racing Gloves</li>
+            <li onclick="showTrendingResults('pants','Racing Pants',this)">Racing Pants</li>
+            <li onclick="showTrendingResults('jackets','CE2 Certified',this)">CE2 Certified</li>
+            <li onclick="showTrendingResults('jackets','Touring Gear',this)">Touring Gear</li>
+          </ul>
+          <!-- Trending results panel — shown inline below the list -->
+          <div class="search-trending-results" id="search-trending-results" style="display:none;">
+            <div class="search-trending-results-title" id="search-trending-results-title"></div>
+            <div class="search-trending-grid" id="search-trending-grid"></div>
+          </div>
+        </div>
+        <div class="search-bestsellers-col">
+          <div class="search-col-title">Best Sellers
+            <span class="search-view-all" onclick="showViewAllPanel()">View All →</span>
+          </div>
+          <div class="search-bestsellers" id="search-bestsellers"></div>
+        </div>
+      </div>
+      <div class="search-live" id="search-live"></div>
+    </div>
+    <!-- View-all panel — shown instead of default when "View All" is clicked -->
+    <div class="search-viewall-panel" id="search-viewall-panel" style="display:none;">
+      <button class="search-viewall-back" onclick="hideViewAllPanel()">← Back to Search</button>
+      <div class="search-viewall-title">All Products</div>
+      <div class="search-viewall-grid" id="search-viewall-grid"></div>
+    </div>
+  </div>
+</div>
+
+  <!-- ═══════════════════════════════════════════════════════
+     SHARED LOGIN MODAL — paste inside <main> on every page
+     ═══════════════════════════════════════════════════════ -->
+<div class="login-modal-bg" id="login-modal" onclick="if(event.target===this)closeLogin()">
+  <div class="login-modal-box" id="login-modal-box">
+
+    <!-- ── SIGN IN PANE ── -->
+    <div id="auth-login">
+      <div class="login-brand">EKO <span>MOTO</span></div>
+      <button class="auth-back-btn" onclick="closeLogin()" aria-label="Close">← BACK</button>
+      <div class="auth-welcome">Welcome <span>Back</span></div>
+      <p class="auth-tagline">Sign in to your EKO MOTO account</p>
+
+      <div class="login-field">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="juan@email.com"
+               onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="login-field login-field--pw">
+        <label>Password</label>
+        <div class="pw-wrapper">
+          <input type="password" id="login-pass" placeholder="••••••••"
+                 onkeydown="if(event.key==='Enter')doLogin()">
+          <button type="button" class="pw-toggle" onclick="togglePw('login-pass',this)" aria-label="Show password">👁</button>
+        </div>
+      </div>
+
+      <div class="auth-remember-row">
+        <label><input type="checkbox" id="login-remember"> Remember me</label>
+        <a class="auth-forgot" onclick="openForgotPassword()">Forgot password?</a>
+      </div>
+
+      <button class="login-submit-btn" onclick="doLogin()">Log In</button>
+
+      <div class="auth-or"><span>OR</span></div>
+
+      <div class="social-btns-wrap">
+        <button class="social-btn google-btn" onclick="socialSignIn('Google')">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+        <button class="social-btn facebook-btn" onclick="socialSignIn('Facebook')">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ffffff"><path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/></svg>
+          Continue with Facebook
+        </button>
+      </div>
+
+      <p class="auth-switch">Don't have an account? <a onclick="switchAuthTab('signup')">Sign Up</a></p>
+    </div>
+
+    <!-- ── SIGN UP PANE ── -->
+    <div id="auth-signup" style="display:none">
+      <div class="login-brand">EKO <span>MOTO</span></div>
+      <button class="auth-back-btn" onclick="switchAuthTab('login')" aria-label="Back to sign in">← BACK</button>
+      <div class="auth-welcome">Welcome to <span>EKO MOTO</span></div>
+      <p class="auth-tagline">Your best place for racing gear</p>
+
+      <div class="signup-grid">
+        <div class="login-field full"><label>Full Name *</label><input type="text" id="signup-name" placeholder="Juan dela Cruz"></div>
+        <div class="login-field full"><label>Email *</label><input type="email" id="signup-email" placeholder="juan@email.com"></div>
+        <div class="login-field">
+          <label>Date of Birth * <span style="color:var(--red);font-size:10px">(18+ only)</span></label>
+          <input type="date" id="signup-dob">
+          <div class="dob-hint">You must be at least 18 years old.</div>
+        </div>
+        <div class="login-field"><label>Phone Number</label><input type="tel" id="signup-phone" placeholder="+63 917 000 0000"></div>
+        <div class="login-field full"><label>Street Address</label><input type="text" id="signup-address" placeholder="123 Rizal St, Brgy. San Jose"></div>
+        <div class="login-field"><label>City / Municipality</label><input type="text" id="signup-city" placeholder="San Pablo City"></div>
+        <div class="login-field"><label>ZIP Code</label><input type="text" id="signup-zip" placeholder="4000"></div>
+        <div class="login-field login-field--pw full">
+          <label>Password *</label>
+          <div class="pw-wrapper">
+            <input type="password" id="signup-pass" placeholder="Min 8 chars, 1 uppercase, 1 symbol"
+                   oninput="checkPwRules(this.value)">
+            <button type="button" class="pw-toggle" onclick="togglePw('signup-pass',this)" aria-label="Show password">👁</button>
+          </div>
+          <div class="pw-rules">
+            <span id="rule-len">✕ 8+ characters</span>
+            <span id="rule-upper">✕ 1 uppercase</span>
+            <span id="rule-special">✕ 1 special character</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="login-submit-btn" onclick="doSignup()">Sign Up</button>
+
+      <div class="auth-or"><span>OR</span></div>
+      <div class="social-btns-wrap">
+        <button class="social-btn google-btn" onclick="socialSignIn('Google')">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Sign up with Google
+        </button>
+        <button class="social-btn facebook-btn" onclick="socialSignIn('Facebook')">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ffffff"><path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/></svg>
+          Sign up with Facebook
+        </button>
+      </div>
+
+      <p class="auth-switch">Already have an account? <a onclick="switchAuthTab('login')">Log In</a></p>
+    </div>
+
+    <!-- ── PROFILE / EDIT PANE ── -->
+    <div id="auth-profile" style="display:none">
+      <div class="login-brand">EKO <span>MOTO</span></div>
+      <button class="auth-back-btn" onclick="closeLogin()" aria-label="Close">← BACK</button>
+      <div class="auth-welcome">My <span>Profile</span></div>
+      <p class="auth-tagline">Update your account details</p>
+
+      <div class="profile-grid">
+        <div class="login-field full"><label>Full Name</label><input type="text" id="profile-name" placeholder="Juan dela Cruz"></div>
+        <div class="login-field full"><label>Username</label><input type="text" id="profile-username" placeholder="juandelacruZ"></div>
+        <div class="login-field full"><label>Email (read-only)</label><input type="email" id="profile-email" readonly style="opacity:.6;cursor:not-allowed"></div>
+        <div class="login-field"><label>Date of Birth</label><input type="date" id="profile-dob"></div>
+        <div class="login-field"><label>Phone Number</label><input type="tel" id="profile-phone" placeholder="+63 917 000 0000"></div>
+        <div class="login-field full"><label>Street Address</label><input type="text" id="profile-address" placeholder="123 Rizal St, Brgy. San Jose"></div>
+        <div class="login-field"><label>City / Municipality</label><input type="text" id="profile-city" placeholder="San Pablo City"></div>
+        <div class="login-field"><label>ZIP Code</label><input type="text" id="profile-zip" placeholder="4000"></div>
+      </div>
+
+      <button class="login-submit-btn" onclick="saveProfile()">Save Changes →</button>
+      <p class="auth-switch" style="margin-top:12px">
+        <a onclick="doLogout();closeLogin()" style="color:var(--muted)">Sign out of this account</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer-full" id="contact-footer">
+  <div class="footer-full-grid">
+    <div class="footer-brand-col">
+      <div class="footer-logo">EKO <span>MOTO</span></div>
+      <p class="footer-brand-desc">Racing gear engineered for riders who live at the edge. CE2-certified. Uncompromising.</p>
+      <div class="footer-cta-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to Top ↑</div>
+    </div>
+    <div class="footer-nav-col">
+      <div class="footer-nav-head">About us</div>
+      <a class="footer-nav-link" href="our-mission.html">Our Mission</a>
+      <a class="footer-nav-link" href="our-story.html">Our Story</a>
+      <a class="footer-nav-link" href="certifications.html">Certifications</a>
+      <a class="footer-nav-link" href="testimonials.html">Testimonials</a>
+    </div>
+    <div class="footer-nav-col">
+      <div class="footer-nav-head">Shop</div>
+      <a class="footer-nav-link" href="index.html#products">Jackets</a>
+      <a class="footer-nav-link" href="index.html#products">Gloves</a>
+      <a class="footer-nav-link" href="index.html#products">Pants</a>
+      <a class="footer-nav-link" onclick="showToast('Coming soon: Special editions and limited releases'); return false;">Special Editions</a>
+    </div>
+    <div class="footer-nav-col">
+      <div class="footer-nav-head">Collections</div>
+      <a class="footer-nav-link" href="index.html#products">Race Teams</a>
+      <a class="footer-nav-link" href="index.html#products">Track Days</a>
+      <a class="footer-nav-link" href="index.html#products">Touring Riders</a>
+      <a class="footer-nav-link" href="index.html#products">Urban Commuters</a>
+    </div>
+    <div class="footer-nav-col">
+      <div class="footer-nav-head">Contact us</div>
+      <a class="footer-nav-link footer-social" href="https://facebook.com" target="_blank"><span class="social-icon social-fb">f</span> Facebook</a>
+      <a class="footer-nav-link footer-social" href="https://instagram.com" target="_blank"><span class="social-icon social-ig"><svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="#fff"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.148-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.897 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.897-.419-.419-.69-.824-.897-1.38-.165-.42-.36-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.06-1.17.255-1.814.42-2.234.207-.57.479-.96.897-1.381.419-.419.81-.689 1.379-.896.42-.165 1.051-.36 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.846-10.405a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg></span> Instagram</a>
+      <a class="footer-nav-link footer-social" href="https://x.com" target="_blank"><span class="social-icon social-tw">𝕏</span> Twitter</a>
+      <a class="footer-nav-link footer-social" href="https://linkedin.com" target="_blank"><span class="social-icon social-li">in</span> LinkedIn</a>
+      <a class="footer-nav-link footer-social" href="https://youtube.com" target="_blank"><span class="social-icon social-yt">▶</span> YouTube</a>
+    </div>
+  </div>
+  <div class="footer-full-bottom">
+    <span>© 2025 EKO MOTO. All rights reserved.</span>
+    <span><a href="privacy-policy.html" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">Privacy Policy</a> · <a href="terms-conditions.html" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">Terms & Conditions</a> · <a href="terms-of-use.html" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">Terms of Use</a></span>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ════════════════════════════════════════════════
+     SCRIPTS — main.js, then the review system
+════════════════════════════════════════════════════ -->
+<script src="assets/js/main.js"></script>
+
+<script src="assets/js/reviews.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testimonials – EKO MOTO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/reviews.css">
+  <style>
+    .testimonials-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 80px;
+    }
+    .testimonials-header {
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .testimonials-back {
+      background: none;
+      border: 2px solid var(--red);
+      color: var(--red);
+      font-family: var(--font-d);
+      font-size: 8px;
+      font-weight: 600;
+      padding: 4px 8px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .testimonials-back:hover {
+      background: var(--red);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .testimonials-title {
+      font-family: var(--font-d);
+      font-size: 48px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="logo" href="index.html">EKO <span>MOTO</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#products">Shop</a>
+    <a href="about.html">About</a>
+    <a href="index.html#contact-footer">Contact</a>
+    <button class="nav-search-btn" onclick="openSearch()" aria-label="Search">⌕</button>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">🌙</button>
+    <button class="nav-login-btn" id="nav-login-btn" onclick="openLogin()">Login</button>
+    <div class="nav-user-menu" id="nav-user-menu" style="display:none">
+      <span class="nav-user-avatar">👤</span>
+      <span class="nav-user-name" id="nav-user-name">Rider</span>
+      <button class="nav-logout-btn" onclick="openProfile()" title="Edit Profile">✎</button>
+      <button class="nav-logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+    <button class="cart-btn" onclick="window.location.href='cart.html'">
+      <span class="cart-icon">🛒</span> Cart
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<main>
+  <div class="testimonials-container">
+    <div class="testimonials-header">
+      <button class="testimonials-back" onclick="window.history.back()">← BACK</button>
+      <h1 class="testimonials-title">Testimonials</h1>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="review-stats-bar">
+      <div class="review-avg-score" id="review-avg-score">5.0</div>
+      <div class="review-avg-meta">
+        <div class="review-avg-stars" id="review-avg-stars">★★★★★</div>
+        <div class="review-avg-count" id="review-avg-count">4 reviews</div>
+      </div>
+      <div class="review-breakdown" id="review-breakdown"></div>
+    </div>
+
+    <!-- SORT ROW -->
+    <div class="review-sort-row">
+      <span class="review-count-label" id="review-count-label">Showing all reviews</span>
+      <select class="review-sort-sel" id="review-sort-sel" onchange="renderReviews()">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="highest">Highest Rating</option>
+        <option value="lowest">Lowest Rating</option>
+      </select>
+    </div>
+
+    <!-- REVIEW CARDS -->
+    <div class="review-cards-grid" id="review-cards-grid"></div>
+    <button class="review-show-more-btn" id="review-show-more-btn" style="display:none" onclick="showMoreReviews()">Load More Reviews</button>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-overlay-backdrop" onclick="closeSearch()"></div>
+  <div class="search-overlay-panel">
+    <div class="search-overlay-bar">
+      <span class="search-ov-icon">⌕</span>
+      <input type="text" id="overlay-input"
+             placeholder="What are you looking for today?"
+             oninput="liveSearch(this.value)"
+             onkeydown="handleSearchKey(event)"
+             autocomplete="off">
+      <button class="search-ov-close" onclick="closeSearch()" aria-label="Close">×</button>
+    </div>
+    <!-- Default view: trending + bestsellers -->
+    <div class="search-overlay-body" id="search-default-body">
+      <div class="search-default" id="search-default">
+        <div class="search-trending-col">
+          <div class="search-col-title">Trending Searches</div>
+          <ul class="trending-list">
+            <li onclick="showTrendingResults('jackets','Racing Jackets',this)">Racing Jackets</li>
+            <li onclick="showTrendingResults('gloves','Racing Gloves',this)">Racing Gloves</li>
+            <li onclick="showTrendingResults('pants','Racing Pants',this)">Racing Pants</li>
+            <li onclick="showTrendingResults('jackets','CE2 Certified',this)">CE2 Certified</li>
+            <li onclick="showTrendingResults('jackets','Touring Gear',this)">Touring Gear</li>
+          </ul>
+          <!-- Trending results panel — shown inline below the list -->
+          <div class="search-trending-results" id="search-trending-results" style="display:none;">
+            <div class="search-trending-results-title" id="search-trending-results-title"></div>
+            <div class="search-trending-grid" id="search-trending-grid"></div>
+          </div>
+        </div>
+        <div class="search-bestsellers-col">
+          <div class="search-col-title">Best Sellers
+            <span class="search-view-all" onclick="showViewAllPanel()">View All →</span>
+          </div>
+          <div class="search-bestsellers" id="search-bestsellers"></div>
+        </div>
+      </div>
+      <div class="search-live" id="search-live"></div>
+    </div>
+    <!-- View-all panel — shown instead of default when "View All" is clicked -->
+    <div class="search-viewall-panel" id="search-viewall-panel" style="display:none;">
+      <button class="search-viewall-back" onclick="hideViewAllPanel()">← Back to Search</button>
+      <div class="search-viewall-title">All Products</div>
+      <div class="search-viewall-grid" id="search-viewall-grid"></div>
+    </div>
+  </div>
+</div>
+
+    <!-- WRITE A REVIEW -->
+    <div class="review-write-wrap">
+      <div class="review-write-title">Leave a Review</div>
+
+      <div id="review-login-gate" style="display:none">
+        <div class="review-login-gate">
+          <strong>Sign in to write a review</strong>
+          Only verified EKO MOTO riders can post a review.
+          <br>
+          <button class="review-login-gate-btn" onclick="openLogin()">Log In / Sign Up &rarr;</button>
+        </div>
+      </div>
+
+      <div id="review-form-wrap">
+        <p class="review-write-sub" id="review-form-subtitle">Share your experience with EKO MOTO gear.</p>
+
+        <div class="star-picker-label">Your Rating *</div>
+        <div class="star-picker" id="star-picker">
+          <button class="star-picker-btn" data-val="1" onclick="setReviewStar(1)" title="1 star">&#9733;</button>
+          <button class="star-picker-btn" data-val="2" onclick="setReviewStar(2)" title="2 stars">&#9733;</button>
+          <button class="star-picker-btn" data-val="3" onclick="setReviewStar(3)" title="3 stars">&#9733;</button>
+          <button class="star-picker-btn" data-val="4" onclick="setReviewStar(4)" title="4 stars">&#9733;</button>
+          <button class="star-picker-btn" data-val="5" onclick="setReviewStar(5)" title="5 stars">&#9733;</button>
+        </div>
+
+        <div class="review-form-grid">
+          <div class="review-form-field">
+            <label>Your Name *</label>
+            <input type="text" id="review-name" placeholder="Marco R." maxlength="60">
+          </div>
+          <div class="review-form-field">
+            <label>Rider Role / Title</label>
+            <input type="text" id="review-role" placeholder="Track Day Rider, BGC Trackday" maxlength="80">
+          </div>
+          <div class="review-form-field full">
+            <label>Your Review *</label>
+            <textarea id="review-text" placeholder="Tell other riders about your experience with EKO MOTO gear..." maxlength="400" oninput="updateReviewCharCount()"></textarea>
+            <div class="review-char-count"><span id="review-char-num">0</span> / 400</div>
+          </div>
+        </div>
+
+        <button class="review-submit-btn" onclick="submitReview()">Post Review &rarr;</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer-full" id="contact-footer">
+  <div class="footer-full-grid">
+    <div class="footer-brand-col">
+      <div class="footer-logo">EKO <span>MOTO</span></div>
+      <p class="footer-brand-desc">Racing gear engineered for riders who live at the edge. CE2-certified. Uncompromising.</p>
+      <div class="footer-cta-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to Top ↑</div>
+    </div>
+    <div class="footer-nav-col">
+      <div class="footer-nav-head">About us</div>
+      <a class="footer-nav-link" href="our-mission.html">Our Mission</a>
+      <a class="footer-nav-link" href="our-story.html">Our Story</a>
+      <a class="footer-nav-link" href="certifications.html">Certifications</a>
+      <a class="footer-nav-link" href="testimonials.html">Testimonials</a>
+    </div>
+    <div class="footer-nav-col">
+      <div class="footer-nav-head">Shop</div>
+      <a class="footer-nav-link" href="index.html#products">Jackets</a>
+      <a class="footer-nav-link" href="index.html#products">Gloves</a>
+      <a class="footer-nav-link" href="index.html#products">Pants</a>
+      <a class="footer-nav-link" onclick="showToast('Coming soon: Special editions and limited releases'); return false;">Special Editions</a>
+    </div>
+    <div class="footer-nav-col">
+      <div class="footer-nav-head">Collections</div>
+      <a class="footer-nav-link" href="index.html#products">Race Teams</a>
+      <a class="footer-nav-link" href="index.html#products">Track Days</a>
+      <a class="footer-nav-link" href="index.html#products">Touring Riders</a>
+      <a class="footer-nav-link" href="index.html#products">Urban Commuters</a>
+    </div>
+    <div class="footer-nav-col">
+      <div class="footer-nav-head">Contact us</div>
+      <a class="footer-nav-link footer-social" href="https://facebook.com" target="_blank"><span class="social-icon social-fb">f</span> Facebook</a>
+      <a class="footer-nav-link footer-social" href="https://instagram.com" target="_blank"><span class="social-icon social-ig"><svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="#fff"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.148-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.897 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.897-.419-.419-.69-.824-.897-1.38-.165-.42-.36-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.06-1.17.255-1.814.42-2.234.207-.57.479-.96.897-1.381.419-.419.81-.689 1.379-.896.42-.165 1.051-.36 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.68a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.846-10.405a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg></span> Instagram</a>
+      <a class="footer-nav-link footer-social" href="https://x.com" target="_blank"><span class="social-icon social-tw">𝕏</span> Twitter</a>
+      <a class="footer-nav-link footer-social" href="https://linkedin.com" target="_blank"><span class="social-icon social-li">in</span> LinkedIn</a>
+      <a class="footer-nav-link footer-social" href="https://youtube.com" target="_blank"><span class="social-icon social-yt">▶</span> YouTube</a>
+    </div>
+  </div>
+  <div class="footer-full-bottom">
+    <span>© 2025 EKO MOTO. All rights reserved.</span>
+    <span><a href="privacy-policy.html" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">Privacy Policy</a> · <a href="terms-conditions.html" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">Terms & Conditions</a> · <a href="terms-of-use.html" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">Terms of Use</a></span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/reviews.js"></script>
+
+</body>
+</html>
