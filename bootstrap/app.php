@@ -12,10 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'is_admin'       => \App\Http\Middleware\IsAdmin::class,
-            'is_super_admin' => \App\Http\Middleware\IsSuperAdmin::class,
-        ]);
+        // Note: IsAdmin and IsSuperAdmin are referenced directly via
+        // ::class in routes/api.php, so no alias registration is needed
+        // here. 'auth:sanctum' is built in and works automatically.
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
