@@ -26,9 +26,9 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('register_token')->plainTextToken;
 
-        return $this->success(null, 'User registered successfully', 201, [
+        return $this->success(null, 'User registered successfully. Use this token for your first login only.', 201, [
             'token' => $token,
             'user'  => $user
         ]);
@@ -48,9 +48,43 @@ class AuthController extends Controller
             return $this->error('Invalid credentials', 401);
         }
 
+        // First login ever for this account: the register token is
+        // mandatory on top of email+password.
+        if (!$user->has_logged_in) {
+            $bearer = $request->bearerToken();
+
+            if (!$bearer) {
+                return $this->error(
+                    'First login requires the registration token. Send it as a Bearer token in the Authorization header.',
+                    401
+                );
+            }
+
+            // Resolve the token the same way Sanctum does internally,
+            // without requiring this route to sit behind auth:sanctum.
+            $accessToken = \Laravel\Sanctum\PersonalAccessToken::findToken($bearer);
+
+            if (!$accessToken
+                || $accessToken->name !== 'register_token'
+                || $accessToken->tokenable_id !== $user->id
+                || $accessToken->tokenable_type !== get_class($user)
+            ) {
+                return $this->error('Invalid or expired registration token.', 401);
+            }
+
+            // Token is valid and belongs to this exact user — consume it.
+            $accessToken->delete();
+        }
+
+        // Wipe any old tokens (register token if still present, or
+        // previous login tokens) and issue a fresh login token.
         $user->tokens()->delete();
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        if (!$user->has_logged_in) {
+            $user->update(['has_logged_in' => true]);
+        }
+
+        $token = $user->createToken('login_token')->plainTextToken;
 
         return $this->success(null, 'Login successful', 200, [
             'token' => $token,
