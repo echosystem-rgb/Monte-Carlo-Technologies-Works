@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use ApiResponse;
+
     public function index()
     {
-        return response()->json([
-            'success' => true,
-            'data' => Product::all()
-        ]);
+        return $this->success(Product::all());
     }
 
     public function store(Request $request)
@@ -25,11 +25,7 @@ class ProductController extends Controller
 
         $product = Product::create($request->only('name', 'description', 'price'));
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Product created successfully',
-            'data'    => $product
-        ], 201);
+        return $this->success($product, 'Product created successfully', 201);
     }
 
     public function show($id)
@@ -37,16 +33,10 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if (!$product) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Product not found'
-            ], 404);
+            return $this->error('Product not found', 404);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $product
-        ]);
+        return $this->success($product);
     }
 
     public function update(Request $request, $id)
@@ -54,10 +44,7 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if (!$product) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Product not found'
-            ], 404);
+            return $this->error('Product not found', 404);
         }
 
         $request->validate([
@@ -68,11 +55,7 @@ class ProductController extends Controller
 
         $product->update($request->only('name', 'description', 'price'));
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Product updated successfully',
-            'data'    => $product
-        ]);
+        return $this->success($product, 'Product updated successfully');
     }
 
     public function destroy($id)
@@ -80,17 +63,11 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if (!$product) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Product not found'
-            ], 404);
+            return $this->error('Product not found', 404);
         }
 
         $product->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Product deleted successfully'
-        ]);
+        return $this->success(null, 'Product deleted successfully');
     }
-}   
+}
