@@ -58,7 +58,7 @@ trait ApiResponse
         return response()->json(array_merge($response, $extra), $code);
     }
 
-    protected function error($message, $code = 400, $extra = [])
+    protected function error($message, $code = 400, $extra = [])    
     {
         $response = array_merge([
             'status'  => $this->formatStatus($code),

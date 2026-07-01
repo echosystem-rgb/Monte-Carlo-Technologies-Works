@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -78,13 +79,17 @@ class AuthController extends Controller
 
         // Wipe any old tokens (register token if still present, or
         // previous login tokens) and issue a fresh login token.
-        $user->tokens()->delete();
+        // Wrapped in a transaction so a crash mid-way never leaves
+        // has_logged_in out of sync with the tokens table again.
+        $token = DB::transaction(function () use ($user) {
+            $user->tokens()->delete();
 
-        if (!$user->has_logged_in) {
-            $user->update(['has_logged_in' => true]);
-        }
+            if (!$user->has_logged_in) {
+                $user->update(['has_logged_in' => true]);
+            }
 
-        $token = $user->createToken('login_token')->plainTextToken;
+            return $user->createToken('login_token')->plainTextToken;
+        });
 
         return $this->success(null, 'Login successful', 200, [
             'token' => $token,
